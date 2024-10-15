@@ -1,5 +1,7 @@
 package hellojpa;
 
+import static hellojpa.RoleType.*;
+
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -14,16 +16,13 @@ public class JpaMain {
 
         try {
 
-            //영속
+            Member member = new Member();
+            member.setId(1L);
+            member.setUsername("A");
+            member.setRoleType(USER);
 
-            Member member = em.find(Member.class, 150L);
-            member.setName("AAAAA");
+            em.persist(member);
 
-            em.close();
-
-            Member member2 = em.find(Member.class, 150L);
-
-            System.out.println("================");
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
