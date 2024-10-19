@@ -1,7 +1,5 @@
 package hellojpa;
 
-import static hellojpa.RoleType.*;
-
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -21,26 +19,19 @@ public class JpaMain {
             em.persist(team);
 
             Member member = new Member();
-            member.setUsername("member");
-            member.setTeam(team);
+            member.setUsername("member1");
+//            member.changeTeam(team);
+            team.addMember(member);
             em.persist(member);
+
 
             em.flush();
             em.clear();
 
-            Member findMember = em.find(Member.class, member.getId());
-            List<Member> members = findMember.getTeam().getMembers();
+            Team findTeam = em.find(Team.class, team.getId());
+            List<Member> members = findTeam.getMembers();
 
-            for (Member m : members) {
-                System.out.println("m = " + m.getUsername());
-            }
-
-            Team findTeam = findMember.getTeam();
-            System.out.println("findTeam = " + findTeam.getName());
-
-            //
-            Team newTeam = em.find(Team.class, 100L);
-            findMember.setTeam(newTeam);
+            System.out.println("findTeam = " + findTeam);
 
             tx.commit();
         } catch (Exception e) {
