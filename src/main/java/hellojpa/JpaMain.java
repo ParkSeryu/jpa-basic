@@ -1,8 +1,9 @@
 package hellojpa;
 
-import jakarta.persistence.*;
-import java.util.List;
-import org.hibernate.Hibernate;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
 
 public class JpaMain {
 
@@ -22,7 +23,8 @@ public class JpaMain {
       member.setHomeAddress(address);
       em.persist(member);
 
-      Address copyAddress = new Address(address.getCity(), address.getStreet(), address.getZipcode());
+      Address copyAddress = new Address(address.getCity(), address.getStreet(),
+          address.getZipcode());
 
       Member member2 = new Member();
       member2.setUsername("member2");
