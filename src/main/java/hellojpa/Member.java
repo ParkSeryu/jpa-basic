@@ -1,84 +1,101 @@
 package hellojpa;
 
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Member {
 
-  public Member() {}
+    public Member() {
+    }
 
-  @Id
-  @GeneratedValue
-  @Column(name = "MEMBER_ID")
-  private Long id;
+    @Id
+    @GeneratedValue
+    @Column(name = "MEMBER_ID")
+    private Long id;
 
-  @Column(name = "USERNAME")
-  private String username;
+    @Column(name = "USERNAME")
+    private String username;
 
-  //기간 Period
-  @Embedded
-  private Period workPeriod;
+    //기간 Period
+    @Embedded
+    private Period workPeriod;
 
-  //주소
-  @Embedded
-  private Address homeAddress;
+    //주소
+    @Embedded
+    private Address homeAddress;
 
-  @Embedded
-  @AttributeOverrides({
-      @AttributeOverride(name="city",
-          column = @Column(name = "WORK_CITY")),
-      @AttributeOverride(name="street",
-          column = @Column(name = "WORK_STREET")),
-      @AttributeOverride(name="zipcode",
-          column = @Column(name = "WORK_ZIPCODE")),
-  })
-  private Address workAddress;
+    @ElementCollection
+    @CollectionTable(name = "FAVORITE_FOOD", joinColumns = @JoinColumn(name = "MEMBER_ID"))
+    @Column(name = "FOOD_NAME")
+    private Set<String> favoriteFoods = new HashSet<>();
 
-  public Long getId() {
-    return id;
-  }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "MEMBER_ID")
+    private List<AddressEntity> addressHistory = new ArrayList<>();
 
-  public String getUsername() {
-    return username;
-  }
+//    @ElementCollection
+//    @CollectionTable(name = "ADDRESS", joinColumns = @JoinColumn(name = "MEMBER_ID"))
+//    private List<Address> addressHistory = new ArrayList<>();
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
+    public Long getId() {
+        return id;
+    }
 
-  public Period getWorkPeriod() {
-    return workPeriod;
-  }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-  public void setWorkPeriod(Period workPeriod) {
-    this.workPeriod = workPeriod;
-  }
+    public String getUsername() {
+        return username;
+    }
 
-  public Address getHomeAddress() {
-    return homeAddress;
-  }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-  public void setHomeAddress(Address homeAddress) {
-    this.homeAddress = homeAddress;
-  }
+    public Period getWorkPeriod() {
+        return workPeriod;
+    }
+
+    public void setWorkPeriod(Period workPeriod) {
+        this.workPeriod = workPeriod;
+    }
+
+    public Address getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(Address homeAddress) {
+        this.homeAddress = homeAddress;
+    }
+
+    public List<AddressEntity> getAddressHistory() {
+        return addressHistory;
+    }
+
+    public void setAddressHistory(List<AddressEntity> addressHistory) {
+        this.addressHistory = addressHistory;
+    }
+
+    public Set<String> getFavoriteFoods() {
+        return favoriteFoods;
+    }
+
+    public void setFavoriteFoods(Set<String> favoriteFoods) {
+        this.favoriteFoods = favoriteFoods;
+    }
 }

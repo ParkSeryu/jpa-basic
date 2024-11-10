@@ -7,41 +7,55 @@ import jakarta.persistence.Persistence;
 
 public class JpaMain {
 
-  public static void main(String[] args) {
+    public static void main(String[] args) {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
-    EntityManager em = emf.createEntityManager();
-    EntityTransaction tx = em.getTransaction();
-    tx.begin();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
 
-    try {
+        try {
 
-      Address address = new Address("city", "street", "10000");
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setHomeAddress(new Address("homeCity", "street", "10000"));
 
-      Member member = new Member();
-      member.setUsername("member1");
-      member.setHomeAddress(address);
-      em.persist(member);
+            member.getFavoriteFoods().add("치킨");
+            member.getFavoriteFoods().add("족발");
+            member.getFavoriteFoods().add("피자");
 
-      Address copyAddress = new Address(address.getCity(), address.getStreet(),
-          address.getZipcode());
+            member.getAddressHistory().add(new AddressEntity("old1", "street", "10000"));
+            member.getAddressHistory().add(new AddressEntity("old2", "street", "10000"));
 
-      Member member2 = new Member();
-      member2.setUsername("member2");
-      member2.setHomeAddress(copyAddress);
-      em.persist(member2);
+            em.persist(member);
 
-      member.getHomeAddress().setCity("newCity");
+            em.flush();
+            em.clear();
 
-      tx.commit();
-    } catch (Exception e) {
-      System.out.println("e " + e.toString());
-      tx.rollback();
-    } finally {
-      em.close();
+            System.out.println("==================== START ======================");
+            Member findMember = em.find(Member.class, member.getId());
+
+            //homeCity -> newCity
+//            findMember.getHomeAddress().setCity("newCity");
+//            Address a = findMember.getHomeAddress();
+//            findMember.setHomeAddress(new Address("newCity", a.getStreet(), a.getZipcode()));
+
+            //치킨 -> 한식
+//            findMember.getFavoriteFoods().remove("치킨");
+//            findMember.getFavoriteFoods().add("한식");
+
+//            findMember.getAddressHistory().remove(new AddressEntity("old1", "street", "10000"));
+//            findMember.getAddressHistory().add(new AddressEntity("newCity1", "street", "10000"));
+
+            tx.commit();
+        } catch (Exception e) {
+            System.out.println("e " + e.toString());
+            tx.rollback();
+        } finally {
+            em.close();
+        }
+
+        emf.close();
     }
-
-    emf.close();
-  }
 
 }
