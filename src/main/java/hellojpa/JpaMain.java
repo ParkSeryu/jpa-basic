@@ -33,6 +33,7 @@ public class JpaMain {
             em.clear();
 
             System.out.println("==================== START ======================");
+            System.out.println("==================== START ======================");
             Member findMember = em.find(Member.class, member.getId());
 
             //homeCity -> newCity
