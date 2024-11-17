@@ -35,7 +35,7 @@ public class JpaMain {
             System.out.println("==================== START ======================");
             Member findMember = em.find(Member.class, member.getId());
 
-            //homeCity -> newCity
+            //homeCity -> newCityd
 //            findMember.getHomeAddress().setCity("newCity");
 //            Address a = findMember.getHomeAddress();
 //            findMember.setHomeAddress(new Address("newCity", a.getStreet(), a.getZipcode()));
