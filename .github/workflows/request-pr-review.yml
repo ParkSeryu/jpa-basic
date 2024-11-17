@@ -14,4 +14,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           slackBotToken: ${{ secrets.SLACK_BOT_TOKEN }}
-          repoUrl: 'https://github.com/ParkSeryu/jpa-basic.git'
+          repoUrl: 'https://github.com/ParkSeryu/jpa-basic'
