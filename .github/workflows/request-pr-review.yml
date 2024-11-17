@@ -15,3 +15,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           slackBotToken: ${{ secrets.SLACK_BOT_TOKEN }}
           repoUrl: 'https://github.com/ParkSeryu/jpa-basic'
+      - name: Send Slack Message via Webhook
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"되는거냐 안되는거냐!"}' https://hooks.slack.com/services/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
