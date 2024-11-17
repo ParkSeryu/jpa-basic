@@ -8,6 +8,8 @@ jobs:
   notify:
     runs-on: [ ubuntu-latest ]
     steps:
+      - name: Print event context
+        run: echo "${{ toJson(github.event) }}"
       - name: Notify PR Review
         uses: naver/notify-pr-review@v1.2.0
         with:
