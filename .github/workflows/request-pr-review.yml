@@ -2,7 +2,8 @@ name: request pr review
 
 on:
   schedule:
-    - cron: '*/10 * * * *'  # 매 10분마다 실행
+    - cron: '0 1 * * 1-5' # 평일 오전 10시마다 수행
+  workflow_dispatch:  
     
 jobs:
   cron:
