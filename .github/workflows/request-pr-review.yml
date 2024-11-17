@@ -1,17 +1,17 @@
-name: request pr review
+name: Request PR Review
 
 on:
   schedule:
     - cron: '0 1 * * 1-5' # 평일 오전 10시마다 수행
   workflow_dispatch:  
-    
+
 jobs:
-  cron:
-    runs-on: [ubuntu-latest]
+  send_pr_review_message:
+    runs-on: ubuntu-latest
     steps:
-      - name: Request PR Review
-        uses: naver/request-pr-review@v1.2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          slackBotToken: ${{ secrets.SLACK_BOT_TOKEN }}
-          repoUrl: 'https://github.com/ParkSeryu/jpa-basic'
+      - name: Send PR Review Request to Slack
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+          --data '{"channel":"#테스트", "text":"PR Review 요청!"}' \
+          'https://slack.com/api/chat.postMessage' \
+          -H 'Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}'
