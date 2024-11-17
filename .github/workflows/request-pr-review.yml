@@ -17,4 +17,4 @@ jobs:
           repoUrl: 'https://github.com/ParkSeryu/jpa-basic'
       - name: Send Slack Message via Webhook
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"되냐 안되냐!"}' https://hooks.slack.com/services/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
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"ㅅㄷㄴㅅ, World!"}' https://hooks.slack.com/services/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
