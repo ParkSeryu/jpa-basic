@@ -15,6 +15,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           slackBotToken: ${{ secrets.SLACK_BOT_TOKEN }}
           repoUrl: 'https://github.com/ParkSeryu/jpa-basic'
-      - name: Send Slack Message via Webhook
-        run: | 
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"ㅂㅂㅂㅂㅂ, World!"}' https://hooks.slack.com/services/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
+          curlOptions: "-v"
